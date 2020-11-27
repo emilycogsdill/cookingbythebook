@@ -71,24 +71,28 @@ def detail(id):
 
 @app.route('/lookup', methods=['GET', 'POST']) #for more on flask forms: https://python-adv-web-apps.readthedocs.io/en/latest/flask_forms.htmls
 def lookup():
+    results_list=[]
     names = get_names(recipes_list)
     form = NameForm()
     message = ""
     if form.validate_on_submit():
         name = form.name.data
-        if any(name.lower() in x for x in names):
-            # empty the form field
-            form.name.data = ""
-            id = get_id(recipes_list, name)
-            # redirect the browser to another route and template
-            return redirect( url_for('detail', id=id) )
-            #message = f"you searched for {name.lower()}. That recipe has id = {id}"
-        else:
-            message = f"you searched for {name.lower()}. That recipe is not in our database: {names}. The HECK is wrong with you"
+        
+        results_list = []
+        
+        #get all recipe ids and titles
+        #TODO: make a single function that returns tuples
+        ids_list = get_ids_list(recipes_list, name)
+        titles_list = get_recipe_titles_from_ids(recipes_list, ids_list)
+        
+        for t in range(len(ids_list)):
+            results_list.append( (ids_list[t], titles_list[t]))
+            
     return render_template('lookup.html'
                            , names=names
                            , form=form
-                           , message=message)
+                           , message=message
+                           , results=results_list)
 
 
 @app.errorhandler(404)

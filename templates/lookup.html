@@ -20,13 +20,20 @@ Best Movie Actors
   <div class="row">
     <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
 
-      <h1 class="pt-5 pb-2">Welcome to the best movie actors Flask example!</h1>
+      <h1 class="pt-5 pb-2">Look up a damn RECIPE</h1>
 
-      <p class="lead">This is the index page for an example Flask app using Bootstrap and WTForms. Note that only 100 actors are in the data source. Partial names are not valid.</p>
+      <p class="lead">Type something into the search box and see what happens! You will be SHOCKED!! Giuliani is SCREAMING!!!!!</p>
 
       {{ wtf.quick_form(form) }}
 
       <p class="pt-5"><strong>{{ message }}</strong></p>
+        
+        
+    <ul>
+    {% for result in results %}
+        <li><a href="{{ url_for( 'detail', id=result[0] ) }}">{{ result[1] }}</a></li>
+    {% endfor %}
+    </ul>
 
     </div>
   </div>

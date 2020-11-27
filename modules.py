@@ -88,3 +88,24 @@ def get_id(source, name):
     # return these if id is not valid - not a great solution, but simple
     return "Unknown"
     
+
+# find the row that matches the name in the form and retrieve matching id
+def get_ids_list(source, name):
+    output_list=[]
+    for row in source:
+        # lower() makes the string all lowercase
+        if name.lower() in row["Title"].lower():
+            id = row["id"]
+            # change number to string
+            id = str(id)
+            # return id if name is valid
+            output_list.append(id)
+    # return these if id is not valid - not a great solution, but simple
+    return(output_list)
+
+def get_recipe_titles_from_ids(source, ids_list):
+    titles_list=[]
+    for id_val in ids_list:
+        recipe=list(filter(lambda recipe: recipe['id'] == id_val, source))[0]['Title']
+        titles_list.append(recipe)
+    return titles_list
