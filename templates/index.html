@@ -2,18 +2,16 @@
 
 {% block content %}
 
-<h1>A presidential Flask example</h1>
-<p>{{ url_for(request.endpoint, _external=True) }}</p>
-<p>Click any president’s name.</p>
+<h1>Recipes</h1>
+<h3>You gotta do the cookin' by the book</h3>
 
-<!-- pairs is a list that must be sent here by a route function
+<p>Click any recipe title.</p>
 
-     The list will contain 45 pairs: a presidency number, and a
-     president's name -->
+<!-- recipes is a list that must be sent here by a route function. The list contains every recipe id and title. -->
 
     <ul>
     {% for pair in pairs %}
-        <li><a href="{{ url_for( 'detail', num=pair[0] ) }}">{{ pair[1] }}</a></li>
+        <li><a href="{{ url_for( 'detail', id=pair[0] ) }}">{{ pair[1] }}</a></li>
     {% endfor %}
     </ul>
 

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- the full dict for a recipe is sent here as recipe by the route -->
+
+<h1>{{ recipe['Title'] }}</h1>
+
+<!-- NOTE the pattern for pointing to a file inside the static folder -->
+<img class="right" src="{{ url_for('static', filename='images/' + recipe['Image']) }}" alt="Have you ever seen anything so wondrous?">
+
+<font size=2><i>Recipe added {{ recipe['Timestamp_entered'] }}</i></font>
+
+<p> We cooked this on {{ recipe['Timestamp_prepared'] }}.</p>
+
+<p>
+	{% if recipe['Make_again'] == 'yes' %}
+		This went well and we would totally make it again.
+	{% elif recipe['Make_again'] == 'maybe' %}
+		This went okay. We might or might not attempt to make it again.
+	{% elif recipe['Make_again'] == 'no' %}
+		We will not be making this again.
+	{% endif %}
+</p>
+
+<h2>Ingredients</h2>
+
+<p><!-- can we make this a fancy dynamic bulleted list?--> 
+	{{ recipe['Ingredients'] }}
+</p>
+
+<h2>Instructions</h2>
+
+<p><!-- can we make this a fancy dynamic bulleted list?--> 
+	{{ recipe['Instructions'] }}
+</p>
+
+<h2>Notes</h2>
+
+<p><!-- can we make this a fancy dynamic bulleted list?--> 
+	{{ recipe['Notes'] }}
+</p>
+
+<h2>Things to try in the future</h2>
+
+<p><!-- can we make this a fancy dynamic bulleted list?--> 
+	{{ recipe['Things_to_try'] }}
+</p>
+
+<p><a href="{{ recipe['URL'] }}">View original recipe for {{ recipe['Title'] }}.</a></p>
+
+<!-- NOTE the way to link to a route: Use the function name -->
+<p><a href="{{ url_for('index') }}">Return to the list</a> to select a different recipe.</p>
+
+{% endblock %}
