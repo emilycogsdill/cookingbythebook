@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 import itertools
 from sqlalchemy.sql import text
-from modules import *
 
 
 app = Flask(__name__)
@@ -37,7 +36,7 @@ class Recipe(db.Model):
     ingredients = db.Column(db.String)
     instructions = db.Column(db.String)
     notes = db.Column(db.String)
-    make_again = db.Column(db.String)
+    make_again = db.Column(db.Integer)
     things_to_try = db.Column(db.String)
     image = db.Column(db.String)
     category = db.Column(db.String)
@@ -46,8 +45,6 @@ class Recipe(db.Model):
 @app.route('/')
 def index():
     try:
-        recipes = Recipe.query.order_by(Recipe.title).all()
-        
         categories = Recipe.query.with_entities(Recipe.category).distinct()
         categories_list = sorted([c.category for c in categories if c.category!=None])
         
@@ -57,12 +54,14 @@ def index():
         ingredients_list = sorted([x.strip() for x in list(itertools.chain.from_iterable(a))])
 
         return render_template('index.html'
-                               , categories = categories_list
+                               , categories=categories_list
                                , ingredients = ingredients_list
-                               , recipes = recipes
                               )
     except Exception as e:
-        return raiseError(e)
+        # e holds description of the error
+        error_text = "<p>The error:<br>" + str(e) + "</p>"
+        hed = '<h1>Something is broken.</h1>'
+        return hed + error_text
 
 @app.route('/ingredient/<ingredient>')
 def ingredient(ingredient):
@@ -79,7 +78,10 @@ def ingredient(ingredient):
         
         return render_template('list.html', recipes=recipes, ingredient=ingredient)
     except Exception as e:
-        return raiseError(e)
+        # e holds description of the error
+        error_text = "<p>The error:<br>" + str(e) + "</p>"
+        hed = '<h1>Something is broken.</h1>'
+        return hed + error_text
     
 @app.route('/inventory/<category>')
 def inventory(category):
@@ -87,20 +89,10 @@ def inventory(category):
         recipes = Recipe.query.filter_by(category=category).order_by(Recipe.title).all()
         return render_template('list.html', recipes=recipes, category=category)
     except Exception as e:
-        return raiseError(e)
-    
-
-@app.route('/recipe/<recipe_id>')
-def recipe(recipe_id):
-    try:
-        recipe = Recipe.query.filter_by(id=recipe_id).order_by(Recipe.title).all()
-        try:
-            image = recipe[0].image
-        except:
-            image = 'pr40.jpg'
-        return render_template('recipe.html', recipe=recipe[0])
-    except Exception as e:
-        return raiseError(e)
+        # e holds description of the error
+        error_text = "<p>The error:<br>" + str(e) + "</p>"
+        hed = '<h1>Something is broken.</h1>'
+        return hed + error_text
 
 
 if __name__ == '__main__':

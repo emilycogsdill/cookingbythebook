@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends 'bootstrap/base.html' %}
 
 {% block styles %}
 {{ super() }}
@@ -22,7 +20,7 @@ Recipe Explorer
 
       <h1 class="pt-5 pb-2">Recipes Fr Y'azz</h1>
 
-      <p class="lead">You gotta do the cookin by the book!</p>
+      <p class="lead">Look upon my works, ye mighty, and despair:</p>
 
       <h3>Browse by ingredient:</h3>
         <ul>
@@ -37,13 +35,6 @@ Recipe Explorer
           <li><a href="{{ url_for( 'inventory', category=c ) }}">{{ c }}</a></li>
           {% endfor %}
       </ul>
-        
-        <h3>All recipes:</h3>
-        <ul>
-            {% for r in recipes %}
-            <li><a href="{{ url_for( 'recipe', recipe_id=r.id )}}">{{ r.title }}</a></li>
-            {% endfor %}
-        </ul>
 
     </div>
   </div>
