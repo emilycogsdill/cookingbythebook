@@ -4,6 +4,11 @@ functions to be imported into the presidents Flask app
 
 import csv
 
+def raiseError(e):
+    error_text = "<p>The error:<br>" + str(e) + "</p>"
+    hed = '<h1>Something is broken.</h1>'
+    return hed + error_text
+
 def convert_to_dict(filename):
     """
     Convert a CSV file to a list of Python dictionaries
