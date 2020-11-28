@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Recipes</h1>
+<h3>You gotta do the cookin' by the book</h3>
+
+<p>Click any recipe title.</p>
+
+<!-- recipes is a list that must be sent here by a route function. The list contains every recipe id and title. -->
+
+    <ul>
+    {% for pair in pairs %}
+        <li><a href="{{ url_for( 'detail', id=pair[0] ) }}">{{ pair[1] }}</a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
