@@ -21,22 +21,21 @@ recipe Style List
 
       <h1 class="pt-5 pb-2">List of recipes</h1>
 
-      <p class="lead alert alert-warning">This is a list of all the recipes of the
-			<strong>{{ style }}</strong> style in our inventory.</p>
+      <p class="lead alert alert-warning">This is a list of all the matching recipes.</p>
 
 	  <p class="ml-4"><a href="{{ url_for('index') }}">Return to the index.</a></p>
 
 		<table class="table">
 			<tr>
 				<th>Name</th>
-				<th>Style</th>
+				<th>Rating</th>
 			</tr>
 
 			<!-- here is a for-loop to give us all the recipes -->
 			{% for recipe in recipes %}
 			<tr>
 				<td>{{ recipe.name }}</td>
-				<td>{{ recipe.style }}</td>
+				<td>{{ recipe.rating }}</td>
 			</tr>
 			{% endfor %}
 		</table>

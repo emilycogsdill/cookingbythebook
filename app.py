@@ -2,7 +2,7 @@
     add new record, delete a record, edit/update a record
     """
 
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from sqlalchemy import or_, func
@@ -10,7 +10,7 @@ from sqlalchemy.sql import text
 
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectField, RadioField, HiddenField, StringField, IntegerField, FloatField, validators
-from wtforms.validators import InputRequired, Length, Regexp, NumberRange
+from wtforms.validators import InputRequired, Length, Regexp, NumberRange, DataRequired
 from datetime import date,datetime
 import random
 import itertools
@@ -101,21 +101,16 @@ class DeleteForm(FlaskForm):
     id_field = HiddenField()
     purpose = HiddenField()
     submit = SubmitField('Delete This Recipe')
-
-# +++++++++++++++++++++++
-# get local date - does not account for time zone
-# note: date was imported at top of script
-def stringdate():
-    today = date.today()
-    date_list = str(today).split('-')
-    # build string in format 01-01-2000
-    date_string = date_list[1] + "-" + date_list[2] + "-" + date_list[0]
-    return date_string
+    
+# form for searching by ingredient
+class IngredientSearchForm(FlaskForm):
+    ingredient = StringField('Search by ingredient')
+    submit = SubmitField('Submit')    
 
 # +++++++++++++++++++++++
 # routes
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     # get a list of unique values in the style column
     
@@ -126,19 +121,37 @@ def index():
     #ingredients are a little special because each recipe's "ingredients" field is a comma-separated text field
     ingredients = [i.ingredients for i in Recipe.query.with_entities(Recipe.ingredients).distinct()]
     a = [x.split(',') for x in ingredients]
-    ingredients_list = [x.strip() for x in list(itertools.chain.from_iterable(a)) if len(x)>0]
+    ingredients_list = [x.strip().lower() for x in list(itertools.chain.from_iterable(a)) if len(x)>0]
     ingredients_list_sorted = sorted(list(set(ingredients_list)))
+
+    #searching by ingredient
+    form = IngredientSearchForm()
+    
+    message = ""
+    if form.validate_on_submit():
+        ingredient = form.ingredient.data
+        if ingredient.lower() in ingredients_list:
+            # empty the form field
+            form.ingredient.data = ""
+            # redirect the browser to another route and template
+            return redirect( url_for('ingredient', ingredient=ingredient) )
+        
+        else:
+            message = "That ingredient is not in our database."
     
     return render_template('index.html'
                            , styles = styles
                            , ingredients = ingredients_list_sorted
-                           , recipes = recipes_list_sorted)
-#
+                           , recipes = recipes_list_sorted
+                           , form = form
+                           , message = message
+                          )
+
+            
 @app.route('/inventory/<style>')
 def inventory(style):
     recipes = Recipe.query.filter_by(style=style).order_by(Recipe.name).all()
     return render_template('list.html', recipes=recipes, style=style)
-
 
 @app.route('/all_recipes')
 def all_recipes():

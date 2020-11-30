@@ -1,5 +1,7 @@
 {% extends 'bootstrap/base.html' %}
 
+{% import "bootstrap/wtf.html" as wtf %}
+
 {% block styles %}
 {{ super() }}
 	<style>
@@ -20,9 +22,13 @@ Cookin' by the Book
 
         <h1 class="pt-5 pb-2">Recipes:</h1>
         <h3>The very serious and functional Flask web app</h3>
-        <p class="lead">This is a Flask web app, wow. I made it, using the internet.</p>
-        <p>It ain't much, but it's honest work.</p>
-       
+        <p class="lead">This is a Flask web app. I made it using the internet.</p>
+        <p>It ain't much, but it's honest work. <a href="https://github.com/emilycogsdill/cookingbythebook">View on Github</a>, if that's your thing.</p>
+        <br></br>
+      <h3>Search by ingredient:</h3>
+        {{ wtf.quick_form(form) }}        
+      <p class="pt-5"><strong>{{ message }}</strong></p>
+        
       <h3>Browse by ingredient:</h3>
         <ul>
           {% for i in ingredients %}
@@ -41,6 +47,7 @@ Cookin' by the Book
 	  <p><a href="{{ url_for('add_record') }}">Submit a new recipe</a></p>
 	  <p><a href="{{ url_for( 'select_record', letters='AF' ) }}">Edit or delete a recipe</a></p>
 
+        
     </div>
   </div>
 </div>
