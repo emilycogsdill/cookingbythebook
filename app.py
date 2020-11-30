@@ -146,8 +146,7 @@ def index():
                            , form = form
                            , message = message
                           )
-
-            
+  
 @app.route('/inventory/<style>')
 def inventory(style):
     recipes = Recipe.query.filter_by(style=style).order_by(Recipe.name).all()
