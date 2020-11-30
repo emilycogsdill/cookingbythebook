@@ -15,7 +15,7 @@ The app is live here: https://cookingbythebook.herokuapp.com/
 
 * The app itself is, of course, powered by **Flask**.
 
-* Web forms for data entry and retrieval in the app are powered by **Flask-WTF**. Not a family friendly name! But a very family friendly feature!
+* Web forms for data entry and retrieval in the app are powered by **Flask-WTF**. Not a family friendly name! But a very family friendly package!
 
 ### how'd you figure all that out, huh
 
