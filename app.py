@@ -103,16 +103,6 @@ class DeleteForm(FlaskForm):
     submit = SubmitField('Delete This Recipe')
 
 # +++++++++++++++++++++++
-# get local date - does not account for time zone
-# note: date was imported at top of script
-def stringdate():
-    today = date.today()
-    date_list = str(today).split('-')
-    # build string in format 01-01-2000
-    date_string = date_list[1] + "-" + date_list[2] + "-" + date_list[0]
-    return date_string
-
-# +++++++++++++++++++++++
 # routes
 
 @app.route('/')
@@ -134,11 +124,11 @@ def index():
                            , ingredients = ingredients_list_sorted
                            , recipes = recipes_list_sorted)
 #
+
 @app.route('/inventory/<style>')
 def inventory(style):
     recipes = Recipe.query.filter_by(style=style).order_by(Recipe.name).all()
     return render_template('list.html', recipes=recipes, style=style)
-
 
 @app.route('/all_recipes')
 def all_recipes():
