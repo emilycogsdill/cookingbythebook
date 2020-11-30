@@ -11,7 +11,7 @@
 
 
 {% block title %}
-Add a Recipe
+Add a Sock
 {% endblock %}
 
 
@@ -21,7 +21,7 @@ Add a Recipe
 	<div class="row pb-5">
 		<div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
 
-		<h1 class="pt-5 pb-2">Add a New Recipe</h1>
+		<h1 class="pt-5 pb-2">Add a New Sock</h1>
 
 		{% if message %}
 
@@ -29,7 +29,7 @@ Add a Recipe
 			<p class="lead"><strong>{{ message }}</strong></p>
 
 			<!-- links -->
-			<p><a href="{{ url_for('add_record') }}">Submit another recipe.</a></p>
+			<p><a href="{{ url_for('add_record') }}">Submit another sock.</a></p>
 
 			<p><a href="{{ url_for('index') }}">Return to the index.</a></p>
 
@@ -37,7 +37,7 @@ Add a Recipe
 
 			<!-- the form is displayed when template opens via GET not POST -->
 
-			<p class="lead alert alert-primary">Add a new recipe to our inventory.</p>
+			<p class="lead alert alert-primary">Add a new sock to our inventory.</p>
 
 			<p class="ml-4"><a href="{{ url_for('index') }}">Return to the index.</a></p>
 

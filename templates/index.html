@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends 'bootstrap/base.html' %}
 
 {% block styles %}
 {{ super() }}
@@ -10,7 +8,7 @@
 {% endblock %}
 
 {% block title %}
-Recipe Explorer
+Cookin' by the Book
 {% endblock %}
 
 
@@ -20,12 +18,11 @@ Recipe Explorer
   <div class="row">
     <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
 
-      <h1 class="pt-5 pb-2">Recipes Fr Y'azz</h1>
-
-      <p class="lead">You gotta do the cookin by the book!</p>
-    
-        <p><a href="{{ url_for( 'add_record') }}">Add a new recipe, I dare you</a></p>
-
+        <h1 class="pt-5 pb-2">Recipes:</h1>
+        <h3>The very serious and functional Flask web app</h3>
+        <p class="lead">This is a Flask web app, wow. I made it, using the internet.</p>
+        <p>It ain't much, but it's honest work.</p>
+       
       <h3>Browse by ingredient:</h3>
         <ul>
           {% for i in ingredients %}
@@ -33,19 +30,16 @@ Recipe Explorer
           {% endfor %}
       </ul>
         
-      <h3>Discrete vs. Continuous strats:</h3>
-        <ul>
-          {% for c in categories %}
-          <li><a href="{{ url_for( 'inventory', category=c ) }}">{{ c }}</a></li>
-          {% endfor %}
-      </ul>
-        
         <h3>All recipes:</h3>
         <ul>
             {% for r in recipes %}
-            <li><a href="{{ url_for( 'recipe', recipe_id=r.id )}}">{{ r.title }}</a></li>
+            <li><a href="{{ url_for( 'recipe', recipe_id=r.id )}}">{{ r.name }}</a></li>
             {% endfor %}
         </ul>
+
+      <h3>Is your thirst for chaos not yet slaked?</h3>
+	  <p><a href="{{ url_for('add_record') }}">Submit a new recipe</a></p>
+	  <p><a href="{{ url_for( 'select_record', letters='AF' ) }}">Edit or delete a recipe</a></p>
 
     </div>
   </div>

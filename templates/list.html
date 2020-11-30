@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'bootstrap/base.html' %}
 
 {% block styles %}
 {{ super() }}
@@ -9,7 +9,7 @@
 
 
 {% block title %}
-Sock Style List
+recipe Style List
 {% endblock %}
 
 
@@ -19,22 +19,24 @@ Sock Style List
   <div class="row pb-5">
     <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
 
-      <h1 class="pt-5 pb-2">List of Recipes</h1>
+      <h1 class="pt-5 pb-2">List of recipes</h1>
 
       <p class="lead alert alert-warning">This is a list of all the recipes of the
-			<strong>{{ category }}</strong> style in our inventory.</p>
+			<strong>{{ style }}</strong> style in our inventory.</p>
 
 	  <p class="ml-4"><a href="{{ url_for('index') }}">Return to the index.</a></p>
 
 		<table class="table">
 			<tr>
-				<th>Recipe Name</th>
+				<th>Name</th>
+				<th>Style</th>
 			</tr>
 
-			<!-- here is a for-loop to give us all the socks -->
+			<!-- here is a for-loop to give us all the recipes -->
 			{% for recipe in recipes %}
 			<tr>
-				<td>{{ recipe.title }}</td>
+				<td>{{ recipe.name }}</td>
+				<td>{{ recipe.style }}</td>
 			</tr>
 			{% endfor %}
 		</table>
